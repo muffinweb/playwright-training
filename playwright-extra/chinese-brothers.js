@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 fetch("https://www.searates.com/tracking-system/reverse/tracking?route=true&last_successful=false&number=244609286&sealine=MAEU", {
     "headers": {
         "accept": "application/json, text/plain, */*",
@@ -20,5 +22,16 @@ fetch("https://www.searates.com/tracking-system/reverse/tracking?route=true&last
     "mode": "cors",
     "credentials": "omit"
 }).then(res => res.json()).then((response) => {
-    console.log(response.data.containers[0].events);
+
+    let json = response.data;
+    let data = JSON.stringify(json);
+
+
+    fs.writeFile('rawTS.json', data, err => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('output has been written successfully.');
+        }
+    });
 })
