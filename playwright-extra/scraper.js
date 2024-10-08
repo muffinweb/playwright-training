@@ -30,7 +30,7 @@ chromium.launch({ headless: true }).then(async browser => {
     await page2.getByRole('cell', { name: 'Book No.' }).click();
 
     await page2.screenshot({
-        path: 'output2.png',
+        path: 'wanhai-result.png',
         fullPage: true
     });
 
