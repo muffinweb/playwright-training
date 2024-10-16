@@ -1,6 +1,10 @@
-const fs = require("fs");
+import * as fs from "fs"
 
-fetch("https://www.searates.com/tracking-system/reverse/tracking?route=true&last_successful=false&number=244609286&sealine=MAEU", {
+let trackingNumber = "ADL300122300"
+let seaLine = "PCIU"
+let fileNameWithCurrentTime = new Date().toLocaleString().replaceAll(':', '-') + "-raw.json"
+
+fetch(`https://www.searates.com/tracking-system/reverse/tracking?route=false&last_successful=false&number=${trackingNumber}&sealine=${seaLine}`, {
     "headers": {
         "accept": "application/json, text/plain, */*",
         "accept-language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -23,15 +27,15 @@ fetch("https://www.searates.com/tracking-system/reverse/tracking?route=true&last
     "credentials": "omit"
 }).then(res => res.json()).then((response) => {
 
-    let json = response.data;
+    let json = response;
     let data = JSON.stringify(json);
 
-
-    fs.writeFile('rawTS.json', data, err => {
+    fs.writeFile(fileNameWithCurrentTime, data, err => {
         if (err) {
             console.error(err);
         } else {
-            console.log('output has been written successfully.');
+            console.log('Output has been written successfully.');
         }
-    });
+    })
+
 })
